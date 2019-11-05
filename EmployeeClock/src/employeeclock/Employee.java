@@ -11,7 +11,7 @@ package employeeclock;
  */
 public class Employee {
     private int employeeID;
-    private int hourPay;
+    private double hourPay;
     private String employeeName;
     
     /**
@@ -33,7 +33,7 @@ public class Employee {
      * @param employeeName The Employees name
      * @param hourPay The Employees hourly pay
      */
-    public Employee(int employeeID, String employeeName, int hourPay)
+    public Employee(int employeeID, String employeeName, double hourPay)
     {
         this.employeeID = employeeID;
         this.employeeName = employeeName;
