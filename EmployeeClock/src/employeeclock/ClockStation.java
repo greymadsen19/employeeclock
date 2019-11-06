@@ -6,7 +6,7 @@
 package employeeclock;
 
 import java.awt.Color;
-import javax.swing.JOptionPane;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -15,6 +15,9 @@ import javax.swing.JOptionPane;
 public class ClockStation extends javax.swing.JFrame {
 
     private Employee employees[] = new Employee[10];
+    private LocalDateTime time = LocalDateTime.now();
+    private Clock clockedInTimes[] = new Clock[20];
+    private Clock clockedOutTimes[] = new Clock[20];
     
     /**
      * Creates new form ClockStation
