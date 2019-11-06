@@ -37,11 +37,13 @@ public class Clock {
         this.dayOfWeek = Calendar.getInstance().getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.US);
     }
     
-    public Employee getEmployee()
-    {
-        return this.employee;
-    }
-    
+    /**
+     * To string method
+     * to return the information
+     * of the clock
+     * from date time
+     * @return The date and time as a string
+     */
     @Override
     public String toString()
     {
