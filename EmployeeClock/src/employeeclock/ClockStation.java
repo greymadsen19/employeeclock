@@ -15,9 +15,9 @@ import java.time.LocalDateTime;
 public class ClockStation extends javax.swing.JFrame {
 
     private Employee employees[] = new Employee[10];
-    private LocalDateTime time = LocalDateTime.now();
-    private Clock clockedInTimes[] = new Clock[20];
-    private Clock clockedOutTimes[] = new Clock[20];
+    private Clock[] timeClockedOut = new Clock[10];
+    private Clock[] timeClockedIn = new Clock[10];
+    private LocalDateTime[] time = new LocalDateTime[10];
     
     /**
      * Creates new form ClockStation
@@ -121,19 +121,24 @@ public class ClockStation extends javax.swing.JFrame {
         try
         {
             userInput = Integer.parseInt(txtInputBox.getText());
-            for(int i = 0; i < employees.length; i++)
+            for(int i = 0; i < 10; i++)
             {
                 if(employees[i].getEmployeeID() == userInput)
                 {
                     employee = employees[i];
+                    time[i] = LocalDateTime.now();
+                    timeClockedIn[i] = new Clock(employee, time[i]);
+                    System.out.println(timeClockedIn[i] + " " + i);
                     lblMessage.setText(employee.getEmployeeName() + ", you have clocked In");
                     lblMessage.setForeground(Color.BLACK);
+                    txtInputBox.setText("");
                     break;
                 }
                 else
                 {
                     lblMessage.setText("Invalid Employee ID!");
                     lblMessage.setForeground(Color.RED);
+                    txtInputBox.setText("");
                 }
             }
         }

@@ -34,7 +34,12 @@ public class Clock {
     {
         this.employee = employee;
         this.time = time;
-        this.dayOfWeek = Calendar.getInstance().getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.US);
+        this.dayOfWeek = Calendar.getInstance().getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.US);
+    }
+    
+    public Employee getEmployee()
+    {
+        return this.employee;
     }
     
     @Override
