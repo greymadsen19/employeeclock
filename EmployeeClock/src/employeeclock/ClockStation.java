@@ -6,6 +6,8 @@
 package employeeclock;
 
 import java.awt.Color;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.time.LocalDateTime;
 
 /**
@@ -18,6 +20,8 @@ public class ClockStation extends javax.swing.JFrame {
     private Clock[] timeClockedOut = new Clock[10];
     private Clock[] timeClockedIn = new Clock[10];
     private LocalDateTime[] time = new LocalDateTime[10];
+    private FileWriter fwriter;
+    private PrintWriter dataFile;
     
     /**
      * Creates new form ClockStation
@@ -47,7 +51,7 @@ public class ClockStation extends javax.swing.JFrame {
 
         submButton = new javax.swing.JButton();
         progTitle = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        txtScrollPane = new javax.swing.JScrollPane();
         txtInputBox = new javax.swing.JTextArea();
         lblMessage = new javax.swing.JLabel();
 
@@ -65,15 +69,15 @@ public class ClockStation extends javax.swing.JFrame {
         progTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         progTitle.setText("Employee Clock Station");
 
-        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPane1.setToolTipText("");
-        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        txtScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        txtScrollPane.setToolTipText("");
+        txtScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
         txtInputBox.setColumns(20);
         txtInputBox.setRows(5);
-        jScrollPane1.setViewportView(txtInputBox);
+        txtScrollPane.setViewportView(txtInputBox);
 
-        lblMessage.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        lblMessage.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblMessage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -86,7 +90,7 @@ public class ClockStation extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(50, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(50, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(165, 165, 165)
@@ -104,7 +108,7 @@ public class ClockStation extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(lblMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(submButton)
                 .addGap(16, 16, 16))
@@ -121,15 +125,27 @@ public class ClockStation extends javax.swing.JFrame {
         try
         {
             userInput = Integer.parseInt(txtInputBox.getText());
+            fwriter = new FileWriter("ClockTimes.txt", true);
+            dataFile = new PrintWriter(fwriter);
             for(int i = 0; i < 10; i++)
             {
                 if(employees[i].getEmployeeID() == userInput)
                 {
                     employee = employees[i];
                     time[i] = LocalDateTime.now();
-                    timeClockedIn[i] = new Clock(employee, time[i]);
-                    System.out.println(timeClockedIn[i] + " " + i);
-                    lblMessage.setText(employee.getEmployeeName() + ", you have clocked In");
+                    if(timeClockedIn[i] == null)
+                    {
+                        timeClockedIn[i] = new Clock(employee, time[i]);
+                        dataFile.println(employee.toString() + " " + timeClockedIn[i].toString());
+                        lblMessage.setText(employee.getEmployeeName() + ", you have clocked in");
+                    }
+                    else
+                    {
+                        timeClockedOut[i] = new Clock(employee, time[i]);
+                        dataFile.println(employee.toString() + " " + timeClockedOut[i].toString());
+                        lblMessage.setText(employee.getEmployeeName() + ", you have clocked out");
+                    }
+                    dataFile.close();
                     lblMessage.setForeground(Color.BLACK);
                     txtInputBox.setText("");
                     break;
@@ -145,6 +161,9 @@ public class ClockStation extends javax.swing.JFrame {
         catch(Exception e)
         {
             e.printStackTrace();
+            lblMessage.setText("Invalid Employee ID!");
+            lblMessage.setForeground(Color.RED);
+            txtInputBox.setText("");
         }
     }//GEN-LAST:event_submButtonActionPerformed
 
@@ -184,10 +203,10 @@ public class ClockStation extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblMessage;
     private javax.swing.JLabel progTitle;
     private javax.swing.JButton submButton;
     private javax.swing.JTextArea txtInputBox;
+    private javax.swing.JScrollPane txtScrollPane;
     // End of variables declaration//GEN-END:variables
 }

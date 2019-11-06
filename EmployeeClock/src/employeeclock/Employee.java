@@ -40,11 +40,23 @@ public class Employee {
         this.hourPay = hourPay;
     }
     
+    /**
+     * Getter method to
+     * return the employee
+     * ID
+     * @return The employee ID
+     */
     public int getEmployeeID()
     {
         return employeeID;
     }
     
+    /**
+     * Getter method that
+     * returns the name
+     * of an employee
+     * @return Name of employee
+     */
     public String getEmployeeName()
     {
         return employeeName;

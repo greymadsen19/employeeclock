@@ -51,7 +51,8 @@ public class Clock {
         str += time.getDayOfMonth() + "-";
         str += time.getYear() + " ";
         str += time.getHour() + ":";
-        str += time.getMinute();
+        str += time.getMinute() + ":";
+        str += time.getSecond();
         
         return str;
     }
