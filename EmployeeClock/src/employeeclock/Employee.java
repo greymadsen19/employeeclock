@@ -62,6 +62,11 @@ public class Employee {
         return employeeName;
     }
     
+    public void setEmployeeID(int employeeID)
+    {
+        this.employeeID = employeeID;
+    }
+    
     /**
      * This is a toString method for the
      * Employee class that will return

@@ -37,6 +37,13 @@ public class Clock {
         this.dayOfWeek = Calendar.getInstance().getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.US);
     }
     
+    public Clock(Employee emp, LocalDateTime time, String dayOfWeek)
+    {
+        this.dayOfWeek = dayOfWeek;
+        this.employee = emp;
+        this.time = time;
+    }
+    
     /**
      * To string method
      * to return the information
@@ -48,13 +55,14 @@ public class Clock {
     public String toString()
     {
         String str = "";
+        
         str += dayOfWeek + " ";
-        str += time.getMonthValue() + "-";
-        str += time.getDayOfMonth() + "-";
+        str += String.format("%02d", time.getMonthValue()) + "-";
+        str += String.format("%02d", time.getDayOfMonth()) + "-";
         str += time.getYear() + " ";
         str += time.getHour() + ":";
-        str += time.getMinute() + ":";
-        str += time.getSecond();
+        str += String.format("%02d", time.getMinute()) + ":";
+        str += String.format("%02d", time.getSecond());
         
         return str;
     }

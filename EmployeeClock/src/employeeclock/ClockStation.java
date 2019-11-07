@@ -6,9 +6,14 @@
 package employeeclock;
 
 import java.awt.Color;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
 
 /**
  *
@@ -16,10 +21,10 @@ import java.time.LocalDateTime;
  */
 public class ClockStation extends javax.swing.JFrame {
 
-    private Employee employees[] = new Employee[10];
-    private Clock[] timeClockedOut = new Clock[10];
-    private Clock[] timeClockedIn = new Clock[10];
-    private LocalDateTime[] time = new LocalDateTime[10];
+    private Employee employees[] = new Employee[100];
+    private Clock[] timeClockedOut = new Clock[100];
+    private Clock[] timeClockedIn = new Clock[100];
+    private LocalDateTime[] time = new LocalDateTime[100];
     private FileWriter fwriter;
     private PrintWriter dataFile;
     
@@ -28,6 +33,7 @@ public class ClockStation extends javax.swing.JFrame {
      */
     public ClockStation() {
         initComponents();
+        
         employees[0] = new Employee(56849175, "John", 10.99);
         employees[1] = new Employee(56393847, "Sarah", 15.75);
         employees[2] = new Employee(56820361, "Robert", 10.99);
@@ -38,6 +44,37 @@ public class ClockStation extends javax.swing.JFrame {
         employees[7] = new Employee(56510413, "Vanessa", 19.99);
         employees[8] = new Employee(56001704, "Jenn", 14.99);
         employees[9] = new Employee(56065281, "Sam", 15.99);
+        
+        try {
+            // TODO add your handling code here:
+            File file = new File("ClockTimes.txt");
+            Scanner inputFile = new Scanner(file);
+            String lines = "";
+            String[] splitTokens = new String[100];
+            while(inputFile.hasNext())
+            {
+                lines = inputFile.nextLine();
+                splitTokens = lines.split(" ");
+                
+                Employee emp = new Employee(Integer.parseInt(splitTokens[0]),
+                        splitTokens[1], Double.parseDouble(splitTokens[2]));
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm:ss");
+                Clock clock = new Clock(emp, LocalDateTime.parse(splitTokens[4] + " " + splitTokens[5], formatter), splitTokens[3]);
+                
+                for(int i = 0; i < 100; i++)
+                {
+                    if(clock.equals(timeClockedIn[i]))
+                    {
+                        System.out.println("Hello");
+                    }
+                }
+            }
+            
+            
+            inputFile.close();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        }
     }
 
     /**
@@ -138,7 +175,7 @@ public class ClockStation extends javax.swing.JFrame {
             userInput = Integer.parseInt(txtInputBox.getText());
             fwriter = new FileWriter("ClockTimes.txt", true);
             dataFile = new PrintWriter(fwriter);
-            for(int i = 0; i < 10; i++)
+            for(int i = 0; i < 100; i++)
             {
                 if(employees[i].getEmployeeID() == userInput)
                 {
@@ -168,8 +205,9 @@ public class ClockStation extends javax.swing.JFrame {
                     txtInputBox.setText("");
                 }
             }
+                
         }
-        catch(Exception e)
+        catch(IOException | NumberFormatException e)
         {
             e.printStackTrace();
             lblMessage.setText("Invalid Employee ID!");
