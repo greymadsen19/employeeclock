@@ -22,9 +22,12 @@ import java.util.Scanner;
 public class ClockStation extends javax.swing.JFrame {
 
     private Employee employees[] = new Employee[100];
+    private Employee emp;
     private Clock[] timeClockedOut = new Clock[100];
     private Clock[] timeClockedIn = new Clock[100];
     private LocalDateTime[] time = new LocalDateTime[100];
+    private DateTimeFormatter formatter;
+    private Clock clock;
     private FileWriter fwriter;
     private PrintWriter dataFile;
     
@@ -34,7 +37,7 @@ public class ClockStation extends javax.swing.JFrame {
     public ClockStation() {
         initComponents();
         
-        employees[0] = new Employee(56849175, "John", 10.99);
+        /**employees[0] = new Employee(56849175, "John", 10.99);
         employees[1] = new Employee(56393847, "Sarah", 15.75);
         employees[2] = new Employee(56820361, "Robert", 10.99);
         employees[3] = new Employee(56409021, "Jacob", 20.59);
@@ -44,7 +47,7 @@ public class ClockStation extends javax.swing.JFrame {
         employees[7] = new Employee(56510413, "Vanessa", 19.99);
         employees[8] = new Employee(56001704, "Jenn", 14.99);
         employees[9] = new Employee(56065281, "Sam", 15.99);
-        
+        */
         try {
             // TODO add your handling code here:
             File file = new File("ClockTimes.txt");
@@ -56,21 +59,16 @@ public class ClockStation extends javax.swing.JFrame {
                 lines = inputFile.nextLine();
                 splitTokens = lines.split(" ");
                 
-                Employee emp = new Employee(Integer.parseInt(splitTokens[0]),
+                emp = new Employee(Integer.parseInt(splitTokens[0]),
                         splitTokens[1], Double.parseDouble(splitTokens[2]));
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm:ss");
-                Clock clock = new Clock(emp, LocalDateTime.parse(splitTokens[4] + " " + splitTokens[5], formatter), splitTokens[3]);
+                formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm:ss");
+                clock = new Clock(emp, LocalDateTime.parse(splitTokens[4] + " " + splitTokens[5], formatter), splitTokens[3]);
                 
                 for(int i = 0; i < 100; i++)
                 {
-                    if(clock.equals(timeClockedIn[i]))
-                    {
-                        System.out.println("Hello");
-                    }
+                    employees[i] = emp;
                 }
             }
-            
-            
             inputFile.close();
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
@@ -193,6 +191,7 @@ public class ClockStation extends javax.swing.JFrame {
                         dataFile.println(employee.toString() + " " + timeClockedOut[i].toString());
                         lblMessage.setText(employee.getEmployeeName() + ", you have clocked out");
                     }
+                    
                     dataFile.close();
                     lblMessage.setForeground(Color.BLACK);
                     txtInputBox.setText("");
