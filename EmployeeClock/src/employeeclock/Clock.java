@@ -57,10 +57,10 @@ public class Clock {
         String str = "";
         
         str += dayOfWeek + " ";
-        str += String.format("%02d", time.getMonthValue()) + "-";
-        str += String.format("%02d", time.getDayOfMonth()) + "-";
+        str += String.format("%02d", time.getDayOfMonth()) + "/";
+        str += String.format("%02d", time.getMonthValue()) + "/";
         str += time.getYear() + " ";
-        str += time.getHour() + ":";
+        str += String.format("%02d", time.getHour()) + ":";
         str += String.format("%02d", time.getMinute()) + ":";
         str += String.format("%02d", time.getSecond());
         
