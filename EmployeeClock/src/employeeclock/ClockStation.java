@@ -53,7 +53,8 @@ public class ClockStation extends javax.swing.JFrame {
             File file = new File("ClockTimes.txt");
             Scanner inputFile = new Scanner(file);
             String lines = "";
-            String[] splitTokens = new String[100];
+            String[] splitTokens;
+            splitTokens = new String[100];
             while(inputFile.hasNext())
             {
                 lines = inputFile.nextLine();
@@ -63,6 +64,7 @@ public class ClockStation extends javax.swing.JFrame {
                         splitTokens[1], Double.parseDouble(splitTokens[2]));
                 formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
                 clock = new Clock(emp, LocalDateTime.parse(splitTokens[4] + " " + splitTokens[5], formatter), splitTokens[3]);
+                
                 
             }
             inputFile.close();
@@ -175,6 +177,7 @@ public class ClockStation extends javax.swing.JFrame {
                 {
                     employee = employees[i];
                     time[i] = LocalDateTime.now();
+                    
                     if(timeClockedIn[i] == null)
                     {
                         timeClockedIn[i] = new Clock(employee, time[i]);
