@@ -185,15 +185,12 @@ public class ClockStation extends javax.swing.JFrame {
                     employee = employees[i];
                     time[i] = LocalDateTime.now();
                     
-                    if(timeClockedIn[i] == null)
+                    if(isClockedIn() == false)
                     {
                         timeClockedIn[i] = new Clock(employee, time[i]);
                         dataFile.println(employee.toString() + " " + timeClockedIn[i].toString());
                         lblMessage.setText(employee.getEmployeeName() + ", you have clocked in");
-                        if(timeClockedOut[i] != null)
-                        {
-                            timeClockedOut[i] = null;
-                        }
+                        timeClockedOut[i] = null;
                     }
                     else
                     {
@@ -227,6 +224,23 @@ public class ClockStation extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_submButtonActionPerformed
 
+    public boolean isClockedIn()
+    {
+        for(int i = 0; i < 100; i++)
+        {
+            if(timeClockedIn[i] != null)
+            {
+                return true;
+            }
+            else if(timeClockedIn[i] == clock[i])
+            {
+                return true;
+            }
+            
+        }
+        
+        return false;
+    }
     /**
      * @param args the command line arguments
      */
