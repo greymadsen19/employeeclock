@@ -22,12 +22,10 @@ import java.util.Scanner;
 public class ClockStation extends javax.swing.JFrame {
 
     private Employee employees[] = new Employee[100];
-    private Employee emp;
     private Clock[] timeClockedOut = new Clock[100];
     private Clock[] timeClockedIn = new Clock[100];
+    private Clock clock[] = new Clock[100];
     private LocalDateTime[] time = new LocalDateTime[100];
-    private DateTimeFormatter formatter;
-    private Clock clock;
     private FileWriter fwriter;
     private PrintWriter dataFile;
     
@@ -54,28 +52,26 @@ public class ClockStation extends javax.swing.JFrame {
             Scanner inputFile = new Scanner(file);
             String lines = "";
             String[] splitTokens;
-            splitTokens = new String[100];
+            int i = 0;
             while(inputFile.hasNext())
             {
                 lines = inputFile.nextLine();
                 splitTokens = lines.split(" ");
                 
-                emp = new Employee(Integer.parseInt(splitTokens[0]),
+                Employee emp = new Employee(Integer.parseInt(splitTokens[0]),
                         splitTokens[1], Double.parseDouble(splitTokens[2]));
-                formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-                clock = new Clock(emp, LocalDateTime.parse(splitTokens[4] + " " + splitTokens[5], formatter), splitTokens[3]);
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+                clock[i] = new Clock(emp, LocalDateTime.parse(splitTokens[4] + " " + splitTokens[5], formatter), splitTokens[3]);
                 
-                for(int i = 0; i < 100; i++)
+                if(i%2 == 0)
                 {
-                    if(i%2 == 0)
-                    {
-                        timeClockedIn[i] = clock;
-                    }
-                    else
-                    {
-                        timeClockedOut[i] = clock;
-                    }
+                    timeClockedIn[i] = clock[i];
                 }
+                else
+                {
+                    timeClockedOut[i] = clock[i];
+                }
+                ++i;
             }
             inputFile.close();
         } catch (FileNotFoundException ex) {
@@ -92,20 +88,20 @@ public class ClockStation extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        inButton = new javax.swing.JButton();
+        submButton = new javax.swing.JButton();
         progTitle = new javax.swing.JLabel();
         txtScrollPane = new javax.swing.JScrollPane();
         txtInputBox = new javax.swing.JTextArea();
         lblMessage = new javax.swing.JLabel();
-        outButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Clock Station");
 
-        inButton.setText("Clock In");
-        inButton.addActionListener(new java.awt.event.ActionListener() {
+        submButton.setText("SUBMIT");
+        submButton.setActionCommand("SUBMIT");
+        submButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inButtonActionPerformed(evt);
+                submButtonActionPerformed(evt);
             }
         });
 
@@ -124,13 +120,6 @@ public class ClockStation extends javax.swing.JFrame {
         lblMessage.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         lblMessage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-        outButton.setText("Clock Out");
-        outButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                outButtonActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -144,14 +133,12 @@ public class ClockStation extends javax.swing.JFrame {
                 .addComponent(txtScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(50, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(130, 130, 130)
-                .addComponent(inButton)
-                .addGap(18, 18, 18)
-                .addComponent(outButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(76, 76, 76)
                 .addComponent(lblMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(161, 161, 161)
+                .addComponent(submButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -163,9 +150,7 @@ public class ClockStation extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
                 .addComponent(txtScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(inButton)
-                    .addComponent(outButton))
+                .addComponent(submButton)
                 .addGap(16, 16, 16))
         );
 
@@ -184,7 +169,7 @@ public class ClockStation extends javax.swing.JFrame {
      * to a text file.
      * @param evt The event generated by clicking the button
      */
-    private void inButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inButtonActionPerformed
+    private void submButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submButtonActionPerformed
         // TODO add your handling code here:
         int userInput = 0;
         Employee employee = null;
@@ -200,7 +185,7 @@ public class ClockStation extends javax.swing.JFrame {
                     employee = employees[i];
                     time[i] = LocalDateTime.now();
                     
-                    if(timeClockedIn[i] == null || timeClockedOut[i] == clock)
+                    if(timeClockedIn[i] == null)
                     {
                         timeClockedIn[i] = new Clock(employee, time[i]);
                         dataFile.println(employee.toString() + " " + timeClockedIn[i].toString());
@@ -210,57 +195,14 @@ public class ClockStation extends javax.swing.JFrame {
                             timeClockedOut[i] = null;
                         }
                     }
-                    
-                    
-                    dataFile.close();
-                    lblMessage.setForeground(Color.BLACK);
-                    txtInputBox.setText("");
-                    break;
-                }
-                else
-                {
-                    lblMessage.setText("Invalid Employee ID!");
-                    lblMessage.setForeground(Color.RED);
-                    txtInputBox.setText("");
-                }
-            }
-                
-        }
-        catch(IOException | NumberFormatException e)
-        {
-            e.printStackTrace();
-            lblMessage.setText("Invalid Employee ID!");
-            lblMessage.setForeground(Color.RED);
-            txtInputBox.setText("");
-        }
-    }//GEN-LAST:event_inButtonActionPerformed
-
-    private void outButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outButtonActionPerformed
-        // TODO add your handling code here:
-        int userInput = 0;
-        Employee employee = null;
-        try
-        {
-            userInput = Integer.parseInt(txtInputBox.getText());
-            fwriter = new FileWriter("ClockTimes.txt", true);
-            dataFile = new PrintWriter(fwriter);
-            for(int i = 0; i < 100; i++)
-            {
-                if(employees[i].getEmployeeID() == userInput)
-                {
-                    employee = employees[i];
-                    time[i] = LocalDateTime.now();
-                    
-                    if(timeClockedOut[i] == null || timeClockedIn[i] == clock)
+                    else
                     {
                         timeClockedOut[i] = new Clock(employee, time[i]);
                         dataFile.println(employee.toString() + " " + timeClockedOut[i].toString());
                         lblMessage.setText(employee.getEmployeeName() + ", you have clocked out");
-                        if(timeClockedIn[i] != null)
-                        {
-                            timeClockedIn[i] = null;
-                        }
+                        timeClockedIn[i] = null;
                     }
+                    
                     
                     dataFile.close();
                     lblMessage.setForeground(Color.BLACK);
@@ -283,7 +225,7 @@ public class ClockStation extends javax.swing.JFrame {
             lblMessage.setForeground(Color.RED);
             txtInputBox.setText("");
         }
-    }//GEN-LAST:event_outButtonActionPerformed
+    }//GEN-LAST:event_submButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -321,10 +263,9 @@ public class ClockStation extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton inButton;
     private javax.swing.JLabel lblMessage;
-    private javax.swing.JButton outButton;
     private javax.swing.JLabel progTitle;
+    private javax.swing.JButton submButton;
     private javax.swing.JTextArea txtInputBox;
     private javax.swing.JScrollPane txtScrollPane;
     // End of variables declaration//GEN-END:variables

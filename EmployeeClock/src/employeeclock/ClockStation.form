@@ -35,15 +35,13 @@
               <EmptySpace pref="50" max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="130" max="-2" attributes="0"/>
-              <Component id="inButton" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="outButton" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
+              <Component id="lblMessage" min="-2" pref="245" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
-              <Component id="lblMessage" min="-2" pref="245" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="161" max="-2" attributes="0"/>
+              <Component id="submButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -57,22 +55,20 @@
               <EmptySpace pref="85" max="32767" attributes="0"/>
               <Component id="txtScrollPane" min="-2" pref="36" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="inButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="outButton" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
+              <Component id="submButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="inButton">
+    <Component class="javax.swing.JButton" name="submButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Clock In"/>
+        <Property name="text" type="java.lang.String" value="SUBMIT"/>
+        <Property name="actionCommand" type="java.lang.String" value="SUBMIT"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="inButtonActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="submButtonActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="progTitle">
@@ -111,14 +107,6 @@
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="outButton">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Clock Out"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="outButtonActionPerformed"/>
-      </Events>
     </Component>
   </SubComponents>
 </Form>
