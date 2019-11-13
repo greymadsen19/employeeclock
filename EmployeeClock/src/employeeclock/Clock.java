@@ -14,6 +14,7 @@ import java.util.Locale;
  * @author Jacob Madsen
  */
 public class Clock {
+    
     private Employee employee;
     private LocalDateTime time;
     private String dayOfWeek;
@@ -65,5 +66,12 @@ public class Clock {
         str += String.format("%02d", time.getSecond());
         
         return str;
+    }
+
+    /**
+     * @return the employee
+     */
+    public Employee getEmployee() {
+        return employee;
     }
 }

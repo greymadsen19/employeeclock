@@ -185,7 +185,7 @@ public class ClockStation extends javax.swing.JFrame {
                     employee = employees[i];
                     time[i] = LocalDateTime.now();
                     
-                    if(isClockedIn() == false)
+                    if(isClockedIn(employee.getEmployeeID()) == false)
                     {
                         timeClockedIn[i] = new Clock(employee, time[i]);
                         dataFile.println(employee.toString() + " " + timeClockedIn[i].toString());
@@ -224,22 +224,26 @@ public class ClockStation extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_submButtonActionPerformed
 
-    public boolean isClockedIn()
+    public boolean isClockedIn(int id)
     {
-        for(int i = 0; i < 100; i++)
-        {
-            if(timeClockedIn[i] != null)
+        try {
+            for(int i = 0; i < 100; i++)
             {
-                return true;
+                if (timeClockedIn[i].getEmployee().getEmployeeID() == id)
+                {
+                    if(timeClockedIn[i] != null)
+                    {
+                        return true;
+                    }
+                }
             }
-            else if(timeClockedIn[i] == clock[i])
-            {
-                return true;
-            }
-            
+
+            return false;
         }
-        
-        return false;
+        catch(NullPointerException ex)
+        {
+            return false;
+        }
     }
     /**
      * @param args the command line arguments
