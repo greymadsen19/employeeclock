@@ -224,6 +224,15 @@ public class ClockStation extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_submButtonActionPerformed
 
+    /**
+     * Th isClockedIn method checks if
+     * the employee id that was clocked in matches
+     * the id given. It then checks if that
+     * employee has clocked in and returns true
+     * else it returns false.
+     * @param id The id of the employee clocking in
+     * @return return false if not clocked in
+     */
     public boolean isClockedIn(int id)
     {
         try {

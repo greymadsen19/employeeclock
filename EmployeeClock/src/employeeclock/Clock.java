@@ -18,7 +18,13 @@ public class Clock {
     private Employee employee;
     private LocalDateTime time;
     private String dayOfWeek;
-    
+    private ClockType clockType;
+
+    /**
+     * Constructor for the
+     * clock class to 
+     * use the default with no parameters
+     */
     public Clock()
     {
         super();
@@ -38,11 +44,48 @@ public class Clock {
         this.dayOfWeek = Calendar.getInstance().getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.US);
     }
     
+    /**
+     * This constructor builds the
+     * clock time with the employee and time
+     * as well as the day of the week.
+     * @param emp The employee
+     * @param time The time clocked in\out
+     * @param dayOfWeek The day of the week when clocking in\out
+     */
     public Clock(Employee emp, LocalDateTime time, String dayOfWeek)
     {
         this.dayOfWeek = dayOfWeek;
         this.employee = emp;
         this.time = time;
+    }
+    
+    /**
+     * Getter method to return 
+     * the employee that has a clock in\out
+     * time.
+     * @return The employee
+     */
+    public Employee getEmployee() {
+        return employee;
+    }
+    
+    /**
+     * Getter method to return the
+     * value in the Enum called ClockType
+     * @return The type of clock time being IN/OUT
+     */
+    public ClockType getClockType() {
+        return clockType;
+    }
+
+    /**
+     * Setter method to define what
+     * value the ClockType of the clock
+     * is being IN/OUT
+     * @param clockType The type of clock time being IN/OUT
+     */
+    public void setClockType(ClockType clockType) {
+        this.clockType = clockType;
     }
     
     /**
@@ -68,10 +111,5 @@ public class Clock {
         return str;
     }
 
-    /**
-     * @return the employee
-     */
-    public Employee getEmployee() {
-        return employee;
-    }
+    
 }

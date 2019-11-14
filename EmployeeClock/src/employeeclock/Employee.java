@@ -62,6 +62,13 @@ public class Employee {
         return employeeName;
     }
     
+    /**
+     * This method takes in an
+     * argument for an employee ID
+     * to set the value in the
+     * employeeID parameter.
+     * @param employeeID The employees ID
+     */
     public void setEmployeeID(int employeeID)
     {
         this.employeeID = employeeID;
