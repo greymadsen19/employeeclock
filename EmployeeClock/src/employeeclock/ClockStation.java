@@ -25,6 +25,7 @@ public class ClockStation extends javax.swing.JFrame {
     private Clock[] timeClockedOut = new Clock[100];
     private Clock[] timeClockedIn = new Clock[100];
     private Clock clock[] = new Clock[100];
+    private Clock lastNonNull = new Clock();
     private LocalDateTime[] time = new LocalDateTime[100];
     private FileWriter fwriter;
     private PrintWriter dataFile;
@@ -66,10 +67,12 @@ public class ClockStation extends javax.swing.JFrame {
                 if(i%2 == 0)
                 {
                     timeClockedIn[i] = clock[i];
+                    clock[i].setClockType(ClockType.IN);
                 }
                 else
                 {
                     timeClockedOut[i] = clock[i];
+                    clock[i].setClockType(ClockType.OUT);
                 }
                 ++i;
             }
@@ -178,11 +181,12 @@ public class ClockStation extends javax.swing.JFrame {
             userInput = Integer.parseInt(txtInputBox.getText());
             fwriter = new FileWriter("ClockTimes.txt", true);
             dataFile = new PrintWriter(fwriter);
-            for(int j = 0; j < 100; j++)
+            for(int j = (clock.length-1); j >= 0; j--)
             {
-                if(j%2 == 0)
+                if(clock[j] != null)
                 {
-                    clock[j].setClockType(ClockType.IN);
+                    lastNonNull = clock[j];
+                    break;
                 }
             }
             for(int i = 0; i < 100; i++)
@@ -197,14 +201,14 @@ public class ClockStation extends javax.swing.JFrame {
                         timeClockedIn[i] = new Clock(employee, time[i]);
                         dataFile.println(employee.toString() + " " + timeClockedIn[i].toString());
                         lblMessage.setText(employee.getEmployeeName() + ", you have clocked in");
-                        timeClockedOut[i] = null;
+                        lastNonNull.setClockType(ClockType.IN);
                     }
                     else
                     {
                         timeClockedOut[i] = new Clock(employee, time[i]);
                         dataFile.println(employee.toString() + " " + timeClockedOut[i].toString());
                         lblMessage.setText(employee.getEmployeeName() + ", you have clocked out");
-                        timeClockedIn[i] = null;
+                        lastNonNull.setClockType(ClockType.OUT);
                     }
                     
                     
@@ -247,7 +251,7 @@ public class ClockStation extends javax.swing.JFrame {
             {
                 if (timeClockedIn[i].getEmployee().getEmployeeID() == id)
                 {
-                    if(timeClockedIn[i] != null)
+                    if(lastNonNull.getClockType() == ClockType.IN)
                     {
                         return true;
                     }
