@@ -178,6 +178,13 @@ public class ClockStation extends javax.swing.JFrame {
             userInput = Integer.parseInt(txtInputBox.getText());
             fwriter = new FileWriter("ClockTimes.txt", true);
             dataFile = new PrintWriter(fwriter);
+            for(int j = 0; j < 100; j++)
+            {
+                if(j%2 == 0)
+                {
+                    clock[j].setClockType(ClockType.IN);
+                }
+            }
             for(int i = 0; i < 100; i++)
             {
                 if(employees[i].getEmployeeID() == userInput)
