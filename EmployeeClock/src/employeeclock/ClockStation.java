@@ -44,12 +44,6 @@ public class ClockStation extends javax.swing.JFrame {
         employees[2] = new Employee("56820361", "Robert", 10.99);
         employees[3] = new Employee("56409021", "Jacob", 20.59);
         employees[4] = new Employee("56886677", "Bob", 25.45);
-        employees[5] = new Employee("56755266", "Donald", 15.99);
-        employees[6] = new Employee("56957129", "Steve", 16.85);
-        employees[7] = new Employee("56510413", "Vanessa", 19.99);
-        employees[8] = new Employee("56001704", "Jenn", 14.99);
-        employees[9] = new Employee("56065281", "Sam", 15.99);
-        
         try {
             // TODO add your handling code here:
             File file = new File("ClockTimes.txt");
@@ -66,7 +60,6 @@ public class ClockStation extends javax.swing.JFrame {
                         splitTokens[1], Double.parseDouble(splitTokens[2]));
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
                 clock.add(i ,new Clock(emp, LocalDateTime.parse(splitTokens[4] + " " + splitTokens[5], formatter), splitTokens[3]));
-                
                 if(i%2 == 0)
                 {
                     timeClockedIn[i] = clock.get(i);
