@@ -6,6 +6,7 @@
 package employeeclock;
 
 import java.awt.Color;
+import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -25,11 +26,16 @@ import java.util.TimerTask;
 public class ClockStation extends javax.swing.JFrame {
 
     private Employee employees[] = new Employee[100];
+    
     private Clock[] timeClockedOut = new Clock[100];
     private Clock[] timeClockedIn = new Clock[100];
     private ArrayList<Clock> clock = new ArrayList<>();
     private Clock lastNonNull = new Clock();
+    
     private LocalDateTime[] time = new LocalDateTime[100];
+    
+    private PrinterJob printer = PrinterJob.getPrinterJob();
+    
     private FileWriter fwriter;
     private PrintWriter dataFile;
     
@@ -113,12 +119,12 @@ public class ClockStation extends javax.swing.JFrame {
         txtScrollPane = new javax.swing.JScrollPane();
         txtInputBox = new javax.swing.JTextArea();
         lblMessage = new javax.swing.JLabel();
+        printLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Clock Station");
 
-        submButton.setText("SUBMIT");
-        submButton.setActionCommand("SUBMIT");
+        submButton.setText("Clock In");
         submButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 submButtonActionPerformed(evt);
@@ -140,6 +146,14 @@ public class ClockStation extends javax.swing.JFrame {
         lblMessage.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         lblMessage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
+        printLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        printLabel.setText("<html>Print<br>Clock<br>Times</html>");
+        printLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                printLabelMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -147,7 +161,8 @@ public class ClockStation extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(progTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addComponent(printLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(50, Short.MAX_VALUE)
                 .addComponent(txtScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -164,7 +179,9 @@ public class ClockStation extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(progTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(progTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(printLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(lblMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
@@ -248,13 +265,16 @@ public class ClockStation extends javax.swing.JFrame {
         }
         catch(IOException | NullPointerException e)
         {
-            e.printStackTrace();
             lblMessage.setText("Invalid Employee ID!");
             lblMessage.setForeground(Color.RED);
             txtInputBox.setText("");
             startTimer();
         }
     }//GEN-LAST:event_submButtonActionPerformed
+
+    private void printLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_printLabelMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_printLabelMouseClicked
 
     /**
      * Th isClockedIn method checks if
@@ -323,6 +343,7 @@ public class ClockStation extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel lblMessage;
+    private javax.swing.JLabel printLabel;
     private javax.swing.JLabel progTitle;
     private javax.swing.JButton submButton;
     private javax.swing.JTextArea txtInputBox;

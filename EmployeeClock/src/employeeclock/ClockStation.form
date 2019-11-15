@@ -27,7 +27,8 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="progTitle" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="printLabel" min="-2" pref="60" max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace pref="50" max="32767" attributes="0"/>
@@ -49,7 +50,10 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <Component id="progTitle" min="-2" pref="72" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="progTitle" min="-2" pref="72" max="-2" attributes="0"/>
+                  <Component id="printLabel" min="-2" pref="60" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="lblMessage" min="-2" pref="44" max="-2" attributes="0"/>
               <EmptySpace pref="85" max="32767" attributes="0"/>
@@ -64,7 +68,7 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="submButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="SUBMIT"/>
+        <Property name="text" type="java.lang.String" value="Clock In"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="submButtonActionPerformed"/>
@@ -106,6 +110,15 @@
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="printLabel">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="text" type="java.lang.String" value="&lt;html&gt;Print&lt;br&gt;Clock&lt;br&gt;Times&lt;/html&gt;"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="printLabelMouseClicked"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
