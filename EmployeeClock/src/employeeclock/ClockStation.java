@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -24,7 +25,7 @@ public class ClockStation extends javax.swing.JFrame {
     private Employee employees[] = new Employee[100];
     private Clock[] timeClockedOut = new Clock[100];
     private Clock[] timeClockedIn = new Clock[100];
-    private Clock clock[] = new Clock[100];
+    private ArrayList<Clock> clock = new ArrayList<>();
     private Clock lastNonNull = new Clock();
     private LocalDateTime[] time = new LocalDateTime[100];
     private FileWriter fwriter;
@@ -62,17 +63,17 @@ public class ClockStation extends javax.swing.JFrame {
                 Employee emp = new Employee(Integer.parseInt(splitTokens[0]),
                         splitTokens[1], Double.parseDouble(splitTokens[2]));
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-                clock[i] = new Clock(emp, LocalDateTime.parse(splitTokens[4] + " " + splitTokens[5], formatter), splitTokens[3]);
+                clock.add(i ,new Clock(emp, LocalDateTime.parse(splitTokens[4] + " " + splitTokens[5], formatter), splitTokens[3]));
                 
                 if(i%2 == 0)
                 {
-                    timeClockedIn[i] = clock[i];
-                    clock[i].setClockType(ClockType.IN);
+                    timeClockedIn[i] = clock.get(i);
+                    clock.get(i).setClockType(ClockType.IN);
                 }
                 else
                 {
-                    timeClockedOut[i] = clock[i];
-                    clock[i].setClockType(ClockType.OUT);
+                    timeClockedOut[i] = clock.get(i);
+                    clock.get(i).setClockType(ClockType.OUT);
                 }
                 ++i;
             }
@@ -181,11 +182,11 @@ public class ClockStation extends javax.swing.JFrame {
             userInput = Integer.parseInt(txtInputBox.getText());
             fwriter = new FileWriter("ClockTimes.txt", true);
             dataFile = new PrintWriter(fwriter);
-            for(int j = (clock.length-1); j >= 0; j--)
+            for(int j = (clock.size()-1); j >= 0; j--)
             {
-                if(clock[j] != null)
+                if(clock.get(j) != null)
                 {
-                    lastNonNull = clock[j];
+                    lastNonNull = clock.get(j);
                     break;
                 }
             }
