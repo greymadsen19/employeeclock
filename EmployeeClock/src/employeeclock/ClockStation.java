@@ -15,6 +15,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  *
@@ -37,16 +39,16 @@ public class ClockStation extends javax.swing.JFrame {
     public ClockStation() {
         initComponents();
         
-        employees[0] = new Employee(56849175, "John", 10.99);
-        employees[1] = new Employee(56393847, "Sarah", 15.75);
-        employees[2] = new Employee(56820361, "Robert", 10.99);
-        employees[3] = new Employee(56409021, "Jacob", 20.59);
-        employees[4] = new Employee(56886677, "Bob", 25.45);
-        employees[5] = new Employee(56755266, "Donald", 15.99);
-        employees[6] = new Employee(56957129, "Steve", 16.85);
-        employees[7] = new Employee(56510413, "Vanessa", 19.99);
-        employees[8] = new Employee(56001704, "Jenn", 14.99);
-        employees[9] = new Employee(56065281, "Sam", 15.99);
+        employees[0] = new Employee("56849175", "John", 10.99);
+        employees[1] = new Employee("56393847", "Sarah", 15.75);
+        employees[2] = new Employee("56820361", "Robert", 10.99);
+        employees[3] = new Employee("56409021", "Jacob", 20.59);
+        employees[4] = new Employee("56886677", "Bob", 25.45);
+        employees[5] = new Employee("56755266", "Donald", 15.99);
+        employees[6] = new Employee("56957129", "Steve", 16.85);
+        employees[7] = new Employee("56510413", "Vanessa", 19.99);
+        employees[8] = new Employee("56001704", "Jenn", 14.99);
+        employees[9] = new Employee("56065281", "Sam", 15.99);
         
         try {
             // TODO add your handling code here:
@@ -60,7 +62,7 @@ public class ClockStation extends javax.swing.JFrame {
                 lines = inputFile.nextLine();
                 splitTokens = lines.split(" ");
                 
-                Employee emp = new Employee(Integer.parseInt(splitTokens[0]),
+                Employee emp = new Employee(splitTokens[0],
                         splitTokens[1], Double.parseDouble(splitTokens[2]));
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
                 clock.add(i ,new Clock(emp, LocalDateTime.parse(splitTokens[4] + " " + splitTokens[5], formatter), splitTokens[3]));
@@ -81,6 +83,27 @@ public class ClockStation extends javax.swing.JFrame {
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         }
+    }
+    
+    /**
+     * Each time this
+     * method is run it will
+     * create a new timer
+     * which schedules a task
+     * to set the text
+     * of the clockin\out\error
+     * message to blank after a certain 
+     * number of seconds
+     */
+    public void startTimer()
+    {
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask(){
+            @Override
+            public void run() {
+                lblMessage.setText(" ");
+            }
+        }, 3*1000);
     }
 
     /**
@@ -175,11 +198,11 @@ public class ClockStation extends javax.swing.JFrame {
      */
     private void submButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submButtonActionPerformed
         // TODO add your handling code here:
-        int userInput = 0;
+        String userInput = "";
         Employee employee = null;
         try
         {
-            userInput = Integer.parseInt(txtInputBox.getText());
+            userInput = txtInputBox.getText();
             fwriter = new FileWriter("ClockTimes.txt", true);
             dataFile = new PrintWriter(fwriter);
             for(int j = (clock.size()-1); j >= 0; j--)
@@ -192,7 +215,7 @@ public class ClockStation extends javax.swing.JFrame {
             }
             for(int i = 0; i < 100; i++)
             {
-                if(employees[i].getEmployeeID() == userInput)
+                if(employees[i].getEmployeeID().equals(userInput))
                 {
                     employee = employees[i];
                     time[i] = LocalDateTime.now();
@@ -203,6 +226,7 @@ public class ClockStation extends javax.swing.JFrame {
                         dataFile.println(employee.toString() + " " + timeClockedIn[i].toString());
                         lblMessage.setText(employee.getEmployeeName() + ", you have clocked in");
                         lastNonNull.setClockType(ClockType.IN);
+                        startTimer();
                     }
                     else
                     {
@@ -210,6 +234,7 @@ public class ClockStation extends javax.swing.JFrame {
                         dataFile.println(employee.toString() + " " + timeClockedOut[i].toString());
                         lblMessage.setText(employee.getEmployeeName() + ", you have clocked out");
                         lastNonNull.setClockType(ClockType.OUT);
+                        startTimer();
                     }
                     
                     
@@ -223,16 +248,18 @@ public class ClockStation extends javax.swing.JFrame {
                     lblMessage.setText("Invalid Employee ID!");
                     lblMessage.setForeground(Color.RED);
                     txtInputBox.setText("");
+                    startTimer();
                 }
             }
                 
         }
-        catch(IOException | NumberFormatException e)
+        catch(IOException | NullPointerException e)
         {
             e.printStackTrace();
             lblMessage.setText("Invalid Employee ID!");
             lblMessage.setForeground(Color.RED);
             txtInputBox.setText("");
+            startTimer();
         }
     }//GEN-LAST:event_submButtonActionPerformed
 
@@ -245,12 +272,12 @@ public class ClockStation extends javax.swing.JFrame {
      * @param id The id of the employee clocking in
      * @return return false if not clocked in
      */
-    public boolean isClockedIn(int id)
+    public boolean isClockedIn(String id)
     {
         try {
             for(int i = 0; i < 100; i++)
             {
-                if (timeClockedIn[i].getEmployee().getEmployeeID() == id)
+                if (timeClockedIn[i].getEmployee().getEmployeeID().equals(id))
                 {
                     if(lastNonNull.getClockType() == ClockType.IN)
                     {

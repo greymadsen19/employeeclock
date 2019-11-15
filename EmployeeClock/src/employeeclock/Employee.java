@@ -10,7 +10,7 @@ package employeeclock;
  * @author Jacob Madsen
  */
 public class Employee {
-    private int employeeID;
+    private String employeeID;
     private double hourPay;
     private String employeeName;
     
@@ -33,7 +33,7 @@ public class Employee {
      * @param employeeName The Employees name
      * @param hourPay The Employees hourly pay
      */
-    public Employee(int employeeID, String employeeName, double hourPay)
+    public Employee(String employeeID, String employeeName, double hourPay)
     {
         this.employeeID = employeeID;
         this.employeeName = employeeName;
@@ -46,7 +46,7 @@ public class Employee {
      * ID
      * @return The employee ID
      */
-    public int getEmployeeID()
+    public String getEmployeeID()
     {
         return employeeID;
     }
@@ -69,7 +69,7 @@ public class Employee {
      * employeeID parameter.
      * @param employeeID The employees ID
      */
-    public void setEmployeeID(int employeeID)
+    public void setEmployeeID(String employeeID)
     {
         this.employeeID = employeeID;
     }
