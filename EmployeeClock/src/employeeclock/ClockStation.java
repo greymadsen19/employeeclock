@@ -8,6 +8,7 @@ package employeeclock;
 import java.awt.Color;
 import java.awt.print.PrinterJob;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -18,6 +19,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
+import javax.print.Doc;
+import javax.print.DocFlavor;
+import javax.print.DocPrintJob;
+import javax.print.PrintService;
+import javax.print.PrintServiceLookup;
+import javax.print.SimpleDoc;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
 
 /**
  *
@@ -34,8 +43,7 @@ public class ClockStation extends javax.swing.JFrame {
     
     private LocalDateTime[] time = new LocalDateTime[100];
     
-    private PrinterJob printer = PrinterJob.getPrinterJob();
-    
+    private File file;
     private FileWriter fwriter;
     private PrintWriter dataFile;
     
@@ -52,7 +60,7 @@ public class ClockStation extends javax.swing.JFrame {
         employees[4] = new Employee("56886677", "Bob", 25.45);
         try {
             // TODO add your handling code here:
-            File file = new File("ClockTimes.txt");
+            file = new File("ClockTimes.txt");
             Scanner inputFile = new Scanner(file);
             String lines = "";
             String[] splitTokens;
@@ -274,6 +282,27 @@ public class ClockStation extends javax.swing.JFrame {
 
     private void printLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_printLabelMouseClicked
         // TODO add your handling code here:
+        try
+        {
+            FileInputStream inputStream = new FileInputStream(file);
+            inputStream.read();
+            DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
+            PrintRequestAttributeSet asset = new HashPrintRequestAttributeSet();
+            PrintService[] pservices = PrintServiceLookup.lookupPrintServices(flavor, asset);
+            
+            Doc doc = new SimpleDoc(inputStream, flavor, null);
+            
+            System.out.print(pservices[0].getName());
+            
+            DocPrintJob pj = pservices[0].createPrintJob();
+            
+            pj.print(doc, asset);
+            
+            inputStream.close();
+        }
+        catch(Exception e)
+        {
+        }
     }//GEN-LAST:event_printLabelMouseClicked
 
     /**
