@@ -6,10 +6,8 @@
 package employeeclock;
 
 import java.awt.Color;
-import java.awt.print.PrinterJob;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -24,6 +22,7 @@ import javax.print.DocFlavor;
 import javax.print.DocPrintJob;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
+import javax.print.ServiceUI;
 import javax.print.SimpleDoc;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
@@ -65,6 +64,7 @@ public class ClockStation extends javax.swing.JFrame {
             String lines = "";
             String[] splitTokens;
             int i = 0;
+            
             while(inputFile.hasNext())
             {
                 lines = inputFile.nextLine();
@@ -87,7 +87,7 @@ public class ClockStation extends javax.swing.JFrame {
                 ++i;
             }
             inputFile.close();
-        } catch (FileNotFoundException ex) {
+        } catch (IOException | NumberFormatException ex) {
             ex.printStackTrace();
         }
     }
@@ -223,6 +223,7 @@ public class ClockStation extends javax.swing.JFrame {
             userInput = txtInputBox.getText();
             fwriter = new FileWriter("ClockTimes.txt", true);
             dataFile = new PrintWriter(fwriter);
+            
             for(int j = (clock.size()-1); j >= 0; j--)
             {
                 if(clock.get(j) != null)
@@ -289,19 +290,19 @@ public class ClockStation extends javax.swing.JFrame {
             DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
             PrintRequestAttributeSet asset = new HashPrintRequestAttributeSet();
             PrintService[] pservices = PrintServiceLookup.lookupPrintServices(flavor, asset);
+            PrintService defaultService = PrintServiceLookup.lookupDefaultPrintService();
             
             Doc doc = new SimpleDoc(inputStream, flavor, null);
-            int i;
-            for(i = 0; i < pservices.length; i++)
-            {
-            System.out.println(pservices[i].getName());
-            }
-            System.out.println("Enter a value from 0 to 8 to select a printer");
-            Scanner sc = new Scanner(System.in);
-            i = sc.nextInt();
-            DocPrintJob pj = pservices[i].createPrintJob();
             
-            pj.print(doc, asset);
+            if(pservices.length > 0)
+            {
+                PrintService selectPrinter = ServiceUI.printDialog(null, 50, 50, pservices, defaultService, flavor, asset);
+                if(selectPrinter != null)
+                {
+                    DocPrintJob pj = selectPrinter.createPrintJob();
+                    pj.print(doc, asset);
+                }
+            }
             
             inputStream.close();
         }
