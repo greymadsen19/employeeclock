@@ -291,10 +291,15 @@ public class ClockStation extends javax.swing.JFrame {
             PrintService[] pservices = PrintServiceLookup.lookupPrintServices(flavor, asset);
             
             Doc doc = new SimpleDoc(inputStream, flavor, null);
-            
-            System.out.print(pservices[0].getName());
-            
-            DocPrintJob pj = pservices[0].createPrintJob();
+            int i;
+            for(i = 0; i < pservices.length; i++)
+            {
+            System.out.println(pservices[i].getName());
+            }
+            System.out.println("Enter a value from 0 to 8 to select a printer");
+            Scanner sc = new Scanner(System.in);
+            i = sc.nextInt();
+            DocPrintJob pj = pservices[i].createPrintJob();
             
             pj.print(doc, asset);
             
@@ -302,6 +307,7 @@ public class ClockStation extends javax.swing.JFrame {
         }
         catch(Exception e)
         {
+            e.printStackTrace();
         }
     }//GEN-LAST:event_printLabelMouseClicked
 
