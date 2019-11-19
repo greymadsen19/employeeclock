@@ -258,7 +258,7 @@ public class ClockStation extends javax.swing.JFrame {
             //Check if the file has no data so that a header can be added
             if(file.length() == 0)
             {
-                dataFile.println("             Employee_ID Employee_Name Hourly_Pay Day_Of_Week Date      Time");
+                dataFile.println("             Employee_ID Employee_Name Hourly_Pay Day_Of_Week Date       Time");
                 dataFile.println("            ----------- ------------- ---------- ----------- ----       ----");
             }
             
