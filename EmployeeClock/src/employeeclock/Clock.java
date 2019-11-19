@@ -10,7 +10,18 @@ import java.util.Calendar;
 import java.util.Locale;
 
 /**
- *
+ * The clock class
+ * contains the information
+ * for a clock time
+ * clocked by an employee.
+ * This being the day of week,
+ * type of clock time(IN or OUT),
+ * and the LocalDateTime containing
+ * the date and time they have being
+ * recorded of clocking.
+ * The class accepts an employee and a LocalDateTime
+ * as its parameters and also is able to accept the
+ * day of the week.
  * @author Jacob Madsen
  */
 public class Clock {
@@ -99,7 +110,7 @@ public class Clock {
     public String toString()
     {
         String str = "";
-        str += dayOfWeek + " ";
+        str += dayOfWeek + "     ";
         str += String.format("%02d", time.getDayOfMonth()) + "/";
         str += String.format("%02d", time.getMonthValue()) + "/";
         str += time.getYear() + " ";

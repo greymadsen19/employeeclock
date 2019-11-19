@@ -6,7 +6,14 @@
 package employeeclock;
 
 /**
- *
+ * The employee class
+ * contains the
+ * information of an employee:
+ * Their ID, their hourly pay, and
+ * their name.
+ * The class is capable of taking in
+ * no arguments or taking in those
+ * three parameters as arguments.
  * @author Jacob Madsen
  */
 public class Employee {
@@ -85,9 +92,9 @@ public class Employee {
     public String toString()
     {
         String str = "";
-        str += employeeID + " ";
-        str += employeeName + " ";
-        str += hourPay;
+        str += employeeID + "    ";
+        str += employeeName + "\t      ";
+        str += hourPay + "     ";
         return str;
     }
 }

@@ -28,7 +28,20 @@ import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
 
 /**
- *
+ * The ClockStation program
+ * is a Clock-in\out station
+ * for employees that allows the
+ * employee to enter their employee id
+ * and will clock them in if they
+ * haven't clocked in yet or
+ * clocks them out as well as saving to a file.
+ * If they enter an invalid ID then
+ * an error message is displayed.
+ * There is also an area in the program that
+ * the user can click to open a print
+ * dialog so that they can print out
+ * the text file where the clock times for 
+ * each employee are stored.
  * @author Jacob Madsen
  */
 public class ClockStation extends javax.swing.JFrame {
@@ -65,15 +78,33 @@ public class ClockStation extends javax.swing.JFrame {
             String[] splitTokens;
             int i = 0;
             
+            //Ints to store the first two lines
+            int currentLine = 0;
+            int skipLine = 1;
+            
             while(inputFile.hasNext())
             {
-                lines = inputFile.nextLine();
-                splitTokens = lines.split(" ");
                 
-                Employee emp = new Employee(splitTokens[0],
-                        splitTokens[1], Double.parseDouble(splitTokens[2]));
+                lines = inputFile.nextLine();
+                
+                //Split the lines of a file with two delimeters: Space and tab
+                splitTokens = lines.split("\\s+|\t");
+                
+                //To skip the first two lines to avoid an error when parsing to clock and emp
+                if(currentLine++ <= skipLine)
+                {
+                    continue;
+                }
+                
+                //Create an employee from the file and set the format for the date and time
+                Employee emp = new Employee(splitTokens[1],
+                        splitTokens[2], Double.parseDouble(splitTokens[3]));
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-                clock.add(i ,new Clock(emp, LocalDateTime.parse(splitTokens[4] + " " + splitTokens[5], formatter), splitTokens[3]));
+                
+                //Create a new clock using the tokens read from the file
+                clock.add(i ,new Clock(emp, LocalDateTime.parse(splitTokens[5] + " " + splitTokens[6], formatter), splitTokens[4]));
+                
+                //Check if even to determine if the ClockType enum is IN or OUT
                 if(i%2 == 0)
                 {
                     timeClockedIn[i] = clock.get(i);
@@ -224,6 +255,14 @@ public class ClockStation extends javax.swing.JFrame {
             fwriter = new FileWriter("ClockTimes.txt", true);
             dataFile = new PrintWriter(fwriter);
             
+            //Check if the file has no data so that a header can be added
+            if(file.length() == 0)
+            {
+                dataFile.println("             Employee_ID Employee_Name Hourly_Pay Day_Of_Week Date      Time");
+                dataFile.println("            ----------- ------------- ---------- ----------- ----       ----");
+            }
+            
+            //Get the last non null starting from the end of the clock array
             for(int j = (clock.size()-1); j >= 0; j--)
             {
                 if(clock.get(j) != null)
@@ -232,6 +271,7 @@ public class ClockStation extends javax.swing.JFrame {
                     break;
                 }
             }
+            
             for(int i = 0; i < 100; i++)
             {
                 if(employees[i].getEmployeeID().equals(userInput))
@@ -239,10 +279,12 @@ public class ClockStation extends javax.swing.JFrame {
                     employee = employees[i];
                     time[i] = LocalDateTime.now();
                     
+                    //Check if the employee has not clocked to clock them in
+                    //Else clock them out if the isClockedIn method returns true
                     if(isClockedIn(employee.getEmployeeID()) == false)
                     {
                         timeClockedIn[i] = new Clock(employee, time[i]);
-                        dataFile.println(employee.toString() + " " + timeClockedIn[i].toString());
+                        dataFile.println("Clocked_In" + "  " + employee.toString() + " " + timeClockedIn[i].toString());
                         lblMessage.setText(employee.getEmployeeName() + ", you have clocked in");
                         lastNonNull.setClockType(ClockType.IN);
                         startTimer();
@@ -250,7 +292,7 @@ public class ClockStation extends javax.swing.JFrame {
                     else
                     {
                         timeClockedOut[i] = new Clock(employee, time[i]);
-                        dataFile.println(employee.toString() + " " + timeClockedOut[i].toString());
+                        dataFile.println("Clocked_Out" + " " + employee.toString() + " " + timeClockedOut[i].toString());
                         lblMessage.setText(employee.getEmployeeName() + ", you have clocked out");
                         lastNonNull.setClockType(ClockType.OUT);
                         startTimer();
@@ -264,6 +306,7 @@ public class ClockStation extends javax.swing.JFrame {
                 }
                 else
                 {
+                    //If the employee id is invalid display an error message
                     lblMessage.setText("Invalid Employee ID!");
                     lblMessage.setForeground(Color.RED);
                     txtInputBox.setText("");
@@ -274,6 +317,8 @@ public class ClockStation extends javax.swing.JFrame {
         }
         catch(IOException | NullPointerException e)
         {
+            //Display an error message if an exception is thrown
+            // When the Employee ID is entered
             lblMessage.setText("Invalid Employee ID!");
             lblMessage.setForeground(Color.RED);
             txtInputBox.setText("");
@@ -285,20 +330,31 @@ public class ClockStation extends javax.swing.JFrame {
         // TODO add your handling code here:
         try
         {
+            //Create an input stream and read from the text file
             FileInputStream inputStream = new FileInputStream(file);
             inputStream.read();
+            
+            //With docflavof use autosense to set the input stream for the printer
             DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
+            
+            
+            //Create a Print reqeust attribute set
             PrintRequestAttributeSet asset = new HashPrintRequestAttributeSet();
+            
+            //Create print services for the default service and the rest of the print services available
             PrintService[] pservices = PrintServiceLookup.lookupPrintServices(flavor, asset);
             PrintService defaultService = PrintServiceLookup.lookupDefaultPrintService();
             
+            //Create a new SimpleDoc from the input stream that reads the file and the doc flavor
             Doc doc = new SimpleDoc(inputStream, flavor, null);
             
             if(pservices.length > 0)
             {
+                //Set a new print service from a selection using the Service UI print dialog
                 PrintService selectPrinter = ServiceUI.printDialog(null, 50, 50, pservices, defaultService, flavor, asset);
                 if(selectPrinter != null)
                 {
+                    //Create a print job for the selected print service and print the document
                     DocPrintJob pj = selectPrinter.createPrintJob();
                     pj.print(doc, asset);
                 }

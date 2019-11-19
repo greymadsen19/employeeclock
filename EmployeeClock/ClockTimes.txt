@@ -1,2 +1,14 @@
-56849175 John 10.99 Monday 18/11/2019 14:46:18
-56849175 John 10.99 Monday 18/11/2019 14:46:20
+             Employee_ID Employee_Name Hourly_Pay Day_Of_Week Date      Time
+            ----------- ------------- ---------- ----------- ----       ----
+Clocked_In  56849175    John	      10.99      Tuesday     19/11/2019 11:56:29
+Clocked_Out 56849175    John	      10.99      Tuesday     19/11/2019 11:56:33
+Clocked_In  56393847    Sarah	      15.75      Tuesday     19/11/2019 11:56:41
+Clocked_Out 56393847    Sarah	      15.75      Tuesday     19/11/2019 11:56:45
+Clocked_In  56820361    Robert	      10.99      Tuesday     19/11/2019 11:56:52
+Clocked_Out 56820361    Robert	      10.99      Tuesday     19/11/2019 11:56:56
+Clocked_In  56409021    Jacob	      20.59      Tuesday     19/11/2019 11:57:04
+Clocked_Out 56409021    Jacob	      20.59      Tuesday     19/11/2019 11:57:08
+Clocked_In  56886677    Bob	      25.45      Tuesday     19/11/2019 11:57:16
+Clocked_Out 56886677    Bob	      25.45      Tuesday     19/11/2019 11:57:20
+Clocked_In  56849175    John	      10.99      Tuesday     19/11/2019 12:08:58
+Clocked_Out 56849175    John	      10.99      Tuesday     19/11/2019 12:09:06
