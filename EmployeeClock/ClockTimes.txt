@@ -12,3 +12,5 @@ Clocked_In  56886677    Bob	      25.45      Tuesday     19/11/2019 11:57:16
 Clocked_Out 56886677    Bob	      25.45      Tuesday     19/11/2019 11:57:20
 Clocked_In  56849175    John	      10.99      Tuesday     19/11/2019 12:08:58
 Clocked_Out 56849175    John	      10.99      Tuesday     19/11/2019 12:09:06
+Clocked_In  56849175    John	      10.99      Wednesday     20/11/2019 11:44:58
+Clocked_Out 56849175    John	      10.99      Wednesday     20/11/2019 11:45:43

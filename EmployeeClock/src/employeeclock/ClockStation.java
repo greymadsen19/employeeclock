@@ -6,6 +6,7 @@
 package employeeclock;
 
 import java.awt.Color;
+import java.awt.HeadlessException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
@@ -20,6 +21,7 @@ import java.util.TimerTask;
 import javax.print.Doc;
 import javax.print.DocFlavor;
 import javax.print.DocPrintJob;
+import javax.print.PrintException;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 import javax.print.ServiceUI;
@@ -44,7 +46,8 @@ import javax.print.attribute.PrintRequestAttributeSet;
  * each employee are stored.
  * @author Jacob Madsen
  */
-public class ClockStation extends javax.swing.JFrame {
+public class ClockStation extends javax.swing.JFrame
+{
 
     private Employee employees[] = new Employee[100];
     
@@ -64,6 +67,7 @@ public class ClockStation extends javax.swing.JFrame {
      */
     public ClockStation() {
         initComponents();
+        submButton.setToolTipText("Click here to clock in or out");
         
         employees[0] = new Employee("56849175", "John", 10.99);
         employees[1] = new Employee("56393847", "Sarah", 15.75);
@@ -117,6 +121,17 @@ public class ClockStation extends javax.swing.JFrame {
                 }
                 ++i;
             }
+            
+            //Get the last non null starting from the end of the clock array
+            for(int j = (clock.size()-1); j >= 0; j--)
+            {
+                if(clock.get(j) != null)
+                {
+                    lastNonNull = clock.get(j);
+                    break;
+                }
+            }
+            
             inputFile.close();
         } catch (IOException | NumberFormatException ex) {
             ex.printStackTrace();
@@ -262,15 +277,7 @@ public class ClockStation extends javax.swing.JFrame {
                 dataFile.println("            ----------- ------------- ---------- ----------- ----       ----");
             }
             
-            //Get the last non null starting from the end of the clock array
-            for(int j = (clock.size()-1); j >= 0; j--)
-            {
-                if(clock.get(j) != null)
-                {
-                    lastNonNull = clock.get(j);
-                    break;
-                }
-            }
+            
             
             for(int i = 0; i < 100; i++)
             {
@@ -287,6 +294,7 @@ public class ClockStation extends javax.swing.JFrame {
                         dataFile.println("Clocked_In" + "  " + employee.toString() + " " + timeClockedIn[i].toString());
                         lblMessage.setText(employee.getEmployeeName() + ", you have clocked in");
                         lastNonNull.setClockType(ClockType.IN);
+                        submButton.setText("Clock In");
                         startTimer();
                     }
                     else
@@ -295,6 +303,7 @@ public class ClockStation extends javax.swing.JFrame {
                         dataFile.println("Clocked_Out" + " " + employee.toString() + " " + timeClockedOut[i].toString());
                         lblMessage.setText(employee.getEmployeeName() + ", you have clocked out");
                         lastNonNull.setClockType(ClockType.OUT);
+                        submButton.setText("Clock Out");
                         startTimer();
                     }
                     
@@ -362,9 +371,8 @@ public class ClockStation extends javax.swing.JFrame {
             
             inputStream.close();
         }
-        catch(Exception e)
+        catch(HeadlessException | IOException | PrintException e)
         {
-            e.printStackTrace();
         }
     }//GEN-LAST:event_printLabelMouseClicked
 
@@ -379,15 +387,13 @@ public class ClockStation extends javax.swing.JFrame {
      */
     public boolean isClockedIn(String id)
     {
-        try {
+        try
+        {
             for(int i = 0; i < 100; i++)
             {
-                if (timeClockedIn[i].getEmployee().getEmployeeID().equals(id))
+                if(lastNonNull.getClockType() == ClockType.IN)
                 {
-                    if(lastNonNull.getClockType() == ClockType.IN)
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
 
@@ -401,7 +407,8 @@ public class ClockStation extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[])
+    {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -426,8 +433,10 @@ public class ClockStation extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
+        java.awt.EventQueue.invokeLater(new Runnable()
+        {
+            public void run()
+            {
                 new ClockStation().setVisible(true);
             }
         });
