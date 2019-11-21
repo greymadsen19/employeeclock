@@ -93,7 +93,7 @@ public class Employee {
     {
         String str = "";
         str += employeeID + "    ";
-        str += employeeName + "\t      ";
+        str += employeeName + "\t";
         str += hourPay + "     ";
         return str;
     }

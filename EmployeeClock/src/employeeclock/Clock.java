@@ -110,7 +110,7 @@ public class Clock {
     public String toString()
     {
         String str = "";
-        str += dayOfWeek + "         ";
+        str += dayOfWeek + "     ";
         str += String.format("%02d", time.getDayOfMonth()) + "/";
         str += String.format("%02d", time.getMonthValue()) + "/";
         str += time.getYear() + " ";
