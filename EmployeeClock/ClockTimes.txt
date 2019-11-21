@@ -10,3 +10,9 @@ Clocked_In  56409021    Jacob	      20.59      Thu         21/11/2019 09:43:34
 Clocked_Out 56409021    Jacob	      20.59      Thu         21/11/2019 09:43:37
 Clocked_In  56886677    Bob	      25.45      Thu         21/11/2019 09:43:50
 Clocked_Out 56886677    Bob	      25.45      Thu         21/11/2019 09:43:54
+Clocked_In  56849175    John	      10.99      Thu         21/11/2019 10:33:38
+Clocked_Out 56849175    John	      10.99      Thu         21/11/2019 10:33:46
+Clocked_In  56849175    John	      10.99      Thu         21/11/2019 10:33:59
+Clocked_Out 56849175    John	      10.99      Thu         21/11/2019 10:34:09
+Clocked_In  56849175    John	      10.99      Thu         21/11/2019 10:34:24
+Clocked_Out 56849175    John	      10.99      Thu         21/11/2019 10:34:25
