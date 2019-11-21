@@ -67,7 +67,6 @@ public class ClockStation extends javax.swing.JFrame
      */
     public ClockStation() {
         initComponents();
-        submButton.setToolTipText("Click here to clock in or out");
         
         employees[0] = new Employee("56849175", "John", 10.99);
         employees[1] = new Employee("56393847", "Sarah", 15.75);
@@ -178,7 +177,8 @@ public class ClockStation extends javax.swing.JFrame
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Clock Station");
 
-        submButton.setText("Clock In");
+        submButton.setText("Submit");
+        submButton.setToolTipText("Click here to clock in or out");
         submButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 submButtonActionPerformed(evt);
@@ -218,9 +218,9 @@ public class ClockStation extends javax.swing.JFrame
                 .addGap(18, 18, 18)
                 .addComponent(printLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(50, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(txtScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(76, 76, 76)
                 .addComponent(lblMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -244,6 +244,8 @@ public class ClockStation extends javax.swing.JFrame
                 .addComponent(submButton)
                 .addGap(16, 16, 16))
         );
+
+        getAccessibleContext().setAccessibleDescription("");
 
         pack();
         setLocationRelativeTo(null);
@@ -294,7 +296,6 @@ public class ClockStation extends javax.swing.JFrame
                         dataFile.println("Clocked_In" + "  " + employee.toString() + " " + timeClockedIn[i].toString());
                         lblMessage.setText(employee.getEmployeeName() + ", you have clocked in");
                         lastNonNull.setClockType(ClockType.IN);
-                        submButton.setText("Clock In");
                         startTimer();
                     }
                     else
@@ -303,7 +304,6 @@ public class ClockStation extends javax.swing.JFrame
                         dataFile.println("Clocked_Out" + " " + employee.toString() + " " + timeClockedOut[i].toString());
                         lblMessage.setText(employee.getEmployeeName() + ", you have clocked out");
                         lastNonNull.setClockType(ClockType.OUT);
-                        submButton.setText("Clock Out");
                         startTimer();
                     }
                     

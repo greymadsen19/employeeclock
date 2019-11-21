@@ -52,7 +52,7 @@ public class Clock {
     {
         this.employee = employee;
         this.time = time;
-        this.dayOfWeek = Calendar.getInstance().getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.US);
+        this.dayOfWeek = Calendar.getInstance().getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.US);
     }
     
     /**
@@ -110,7 +110,7 @@ public class Clock {
     public String toString()
     {
         String str = "";
-        str += dayOfWeek + "     ";
+        str += dayOfWeek + "         ";
         str += String.format("%02d", time.getDayOfMonth()) + "/";
         str += String.format("%02d", time.getMonthValue()) + "/";
         str += time.getYear() + " ";
