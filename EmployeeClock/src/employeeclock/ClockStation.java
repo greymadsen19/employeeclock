@@ -133,7 +133,6 @@ public class ClockStation extends javax.swing.JFrame
             
             inputFile.close();
         } catch (IOException | NumberFormatException ex) {
-            ex.printStackTrace();
         }
     }
     
@@ -167,12 +166,12 @@ public class ClockStation extends javax.swing.JFrame
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        titlePanel = new javax.swing.JPanel();
         progTitle = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        inputPanel = new javax.swing.JPanel();
         txtScrollPane = new javax.swing.JScrollPane();
         txtInputBox = new javax.swing.JTextArea();
-        jLabel1 = new javax.swing.JLabel();
+        txtInputLabel = new javax.swing.JLabel();
         submButton = new javax.swing.JButton();
         printLabel = new javax.swing.JLabel();
         lblMessage = new javax.swing.JLabel();
@@ -180,26 +179,30 @@ public class ClockStation extends javax.swing.JFrame
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Clock Station");
 
-        jPanel1.setBackground(new java.awt.Color(220, 220, 220));
+        titlePanel.setBackground(new java.awt.Color(220, 220, 220));
 
-        progTitle.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        progTitle.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
         progTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         progTitle.setText("Employee Clock Station");
 
-        jPanel2.setBackground(new java.awt.Color(220, 220, 220));
+        inputPanel.setBackground(new java.awt.Color(220, 220, 220));
 
         txtScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         txtScrollPane.setToolTipText("");
         txtScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
         txtInputBox.setColumns(20);
+        txtInputBox.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtInputBox.setRows(5);
         txtInputBox.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         txtScrollPane.setViewportView(txtInputBox);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setText("Enter your Employee ID");
+        txtInputLabel.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtInputLabel.setForeground(new java.awt.Color(102, 102, 102));
+        txtInputLabel.setLabelFor(txtInputBox);
+        txtInputLabel.setText("Enter your Employee ID");
 
+        submButton.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         submButton.setText("Submit");
         submButton.setToolTipText("Click here to clock in or out");
         submButton.addActionListener(new java.awt.event.ActionListener() {
@@ -208,35 +211,35 @@ public class ClockStation extends javax.swing.JFrame
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout inputPanelLayout = new javax.swing.GroupLayout(inputPanel);
+        inputPanel.setLayout(inputPanelLayout);
+        inputPanelLayout.setHorizontalGroup(
+            inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inputPanelLayout.createSequentialGroup()
+                .addGroup(inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(inputPanelLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(txtInputLabel))
+                    .addGroup(inputPanelLayout.createSequentialGroup()
                         .addGap(65, 65, 65)
                         .addComponent(submButton))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(inputPanelLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(txtScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        inputPanelLayout.setVerticalGroup(
+            inputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inputPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                .addComponent(txtInputLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(submButton))
         );
 
-        printLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        printLabel.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         printLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         printLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/employeeclock/images/font-awesome_4-7-0_print_256_0_007dff_none .png"))); // NOI18N
         printLabel.setToolTipText("Click here to print the ClockTimes.txt file");
@@ -246,38 +249,39 @@ public class ClockStation extends javax.swing.JFrame
             }
         });
 
-        lblMessage.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        lblMessage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblMessage.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout titlePanelLayout = new javax.swing.GroupLayout(titlePanel);
+        titlePanel.setLayout(titlePanelLayout);
+        titlePanelLayout.setHorizontalGroup(
+            titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, titlePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(inputPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(60, 60, 60))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, titlePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(progTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(20, 20, 20)
                 .addComponent(printLabel)
-                .addGap(14, 14, 14))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(67, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(70, 70, 70))
+                .addGap(20, 20, 20))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, titlePanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        titlePanelLayout.setVerticalGroup(
+            titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(titlePanelLayout.createSequentialGroup()
+                .addGroup(titlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(progTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(titlePanelLayout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(printLabel)))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(inputPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -285,11 +289,11 @@ public class ClockStation extends javax.swing.JFrame
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(titlePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(titlePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         getAccessibleContext().setAccessibleDescription("");
@@ -490,14 +494,14 @@ public class ClockStation extends javax.swing.JFrame
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel inputPanel;
     private javax.swing.JLabel lblMessage;
     private javax.swing.JLabel printLabel;
     private javax.swing.JLabel progTitle;
     private javax.swing.JButton submButton;
+    private javax.swing.JPanel titlePanel;
     private javax.swing.JTextArea txtInputBox;
+    private javax.swing.JLabel txtInputLabel;
     private javax.swing.JScrollPane txtScrollPane;
     // End of variables declaration//GEN-END:variables
 }
